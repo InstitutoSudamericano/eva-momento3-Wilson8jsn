@@ -20,10 +20,10 @@ class Scene {
     @Column(name = "seconds", nullable = false)
     var seconds: Int? = null
 
-    @Column(name = "movieId")
-    var filmId: Long? = null
+    @Column(name = "movie_id")
+    var film_id: Long? = null
 
     @ManyToOne
-    @JoinColumn(name = "movieId", referencedColumnName = "Id", insertable = false, updatable = false)
+    @JoinColumn(name = "movie_id", referencedColumnName = "id", insertable = false, updatable = false)
     var movie: Film? = null
 }
