@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8088
   error:
     include-message: always
 #Configuracion de spring
@@ -18,5 +18,5 @@ spring:
   datasource:
     url: jdbc:postgresql://kashin.db.elephantsql.com:5432/ibxhfwqc?socketTimeout=3
     username: ibxhfwqc
-    password: djEtzvPlTxQRXmLib11RzA98mEbnUjK6
+    password: absW2j_6Uwh4RWXB9XP-JkUgSQVXG0XK
     driverClassName: org.postgresql.Driver

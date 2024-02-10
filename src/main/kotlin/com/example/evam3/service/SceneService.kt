@@ -1,27 +1,33 @@
 package com.example.evam3.service
 
-
-import com.example.evam3.init.Scene
+import com.example.evam3.entity.Scene
 import com.example.evam3.repository.SceneRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-class SceneService {
 
+@Service
+class SceneService {
     @Autowired
     lateinit var sceneRepository: SceneRepository
 
-    fun list(): List<Scene> {
+    fun list (): List<Scene> {
         return sceneRepository.findAll()
     }
 
-    fun save(scene: Scene): Scene{
+    fun listById(id: Long?): Scene? {
+        return sceneRepository.findById(id)
+    }
+
+    fun save(scene: Scene ): Scene {
         try {
             scene.description?.takeIf { it.trim().isNotEmpty() }
-                ?: throw Exception("Nombres no debe ser vacio")
+                ?: throw Exception("El campo Descripción no debe ser vacio")
+
             return sceneRepository.save(scene)
         } catch (ex: Exception) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
         }
     }
 
@@ -37,25 +43,18 @@ class SceneService {
     }
 
     fun updateName(scene: Scene): Scene {
-        try {
-            val response = sceneRepository.findById(scene.id)
-                ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "ID no existe")
-
-            response.apply {
-                description = scene.description
-            }
-
-            return sceneRepository.save(response)
-        } catch (ex: Exception) {
-            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
-        }
+        //try {
+        sceneRepository.findById(scene.id)
+            ?: throw Exception("ID no existe")
+        return sceneRepository.save(scene)
+        //} catch (ex: Exception) {
+        //   throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
+        //  }
     }
-
 
     fun delete(id: Long?): Boolean? {
         try {
             val response = sceneRepository.findById(id)
-
                 ?: throw Exception("ID no existe")
             sceneRepository.deleteById(id!!)
             return true
@@ -63,10 +62,4 @@ class SceneService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
-
-    fun listById(id: Long?): Scene? {
-        return sceneRepository.findById(id)
-    }
-
-
 }

@@ -1,6 +1,6 @@
 package com.example.evam3.controller
 
-import com.example.evam3.init.Film
+import com.example.evam3.entity.Film
 import com.example.evam3.service.FilmService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

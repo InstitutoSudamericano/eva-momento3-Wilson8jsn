@@ -1,6 +1,6 @@
 package com.example.evam3.controller
 
-import com.example.evam3.init.Scene
+import com.example.evam3.entity.Scene
 import com.example.evam3.service.SceneService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 class SceneController {
 
     @RestController
-    @RequestMapping("/Scene")
+    @RequestMapping("/scene")
     @CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
     class ClientController {
 

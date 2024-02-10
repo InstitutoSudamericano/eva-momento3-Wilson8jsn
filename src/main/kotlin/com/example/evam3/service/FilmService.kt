@@ -1,6 +1,6 @@
 package com.example.evam3.service
 
-import com.example.evam3.init.Film
+import com.example.evam3.entity.Film
 import com.example.evam3.repository.FilmRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -18,7 +18,7 @@ class FilmService {
         return filmRepository.findAll()
     }
 
-    fun save (film:Film): Film{
+    fun save (film: Film): Film {
         try{
             film.title?.takeIf { it.trim().isNotEmpty() }
                 ?: throw Exception("Film no debe ser vacio")

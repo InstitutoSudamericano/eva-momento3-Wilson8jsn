@@ -1,4 +1,4 @@
-package com.example.evam3.init
+package com.example.evam3.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

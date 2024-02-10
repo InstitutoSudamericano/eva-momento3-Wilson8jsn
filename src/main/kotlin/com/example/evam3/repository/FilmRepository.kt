@@ -2,7 +2,7 @@ package com.example.evam3.repository
 
 
 
-import com.example.evam3.init.Film
+import com.example.evam3.entity.Film
 import org.springframework.data.jpa.repository.JpaRepository
 
 

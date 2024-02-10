@@ -1,11 +1,11 @@
 package com.example.evam3.repository
 
-
-
-import com.example.evam3.init.Scene
+import com.example.evam3.entity.Scene
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-interface SceneRepository : JpaRepository<Scene, Long> {
+@Repository
+interface SceneRepository:JpaRepository<Scene, Long> {
     fun findById (id: Long?): Scene?
-}
 
+}
