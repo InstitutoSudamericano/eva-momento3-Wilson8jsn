@@ -1,6 +1,7 @@
 package com.example.evam3.service
 
 import com.example.evam3.entity.Scene
+import com.example.evam3.repository.FilmRepository
 import com.example.evam3.repository.SceneRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -11,7 +12,8 @@ import org.springframework.web.server.ResponseStatusException
 class SceneService {
     @Autowired
     lateinit var sceneRepository: SceneRepository
-
+    @Autowired
+    lateinit var filmRepository: FilmRepository
     fun list (): List<Scene> {
         return sceneRepository.findAll()
     }
@@ -19,7 +21,7 @@ class SceneService {
     fun listById(id: Long?): Scene? {
         return sceneRepository.findById(id)
     }
-
+/*
     fun save(scene: Scene ): Scene {
         try {
             scene.description?.takeIf { it.trim().isNotEmpty() }
@@ -28,6 +30,28 @@ class SceneService {
             return sceneRepository.save(scene)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
+        }
+    }
+*/
+
+    fun save(scene: Scene): Scene {
+        try {
+            scene.description?.takeIf { it.trim().isNotEmpty() }
+                ?: throw IllegalArgumentException("La descripción no puede estar vacía")
+            scene.hours?.takeIf { it > 0 }
+                ?: throw IllegalArgumentException("La duración de la escena debe ser mayor que cero")
+            val film = filmRepository.findById(scene.filmId)
+            val allScenes = sceneRepository.findAllByFilmId(scene.filmId)
+            var totalDuration = scene.hours
+            allScenes.forEach { totalDuration = totalDuration?.plus(it.hours ?: 0) }
+            if (totalDuration ?: 0 > film?.duration ?: 0) {
+                throw IllegalArgumentException("La duración total de las escenas excede la duración de la película")
+            }
+            return sceneRepository.save(scene)
+        } catch (ex: IllegalArgumentException) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message)
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Se produjo un error inesperado")
         }
     }
 
